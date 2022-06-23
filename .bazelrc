@@ -1,0 +1,61 @@
+run --color=yes
+
+build --color=yes
+build --verbose_failures
+
+test --test_output=errors
+test --test_verbose_timeout_warnings
+test --test_summary=terse
+
+build --copt=-DHAVE_BAZEL_BUILD=1
+build --copt=-DHAVE_AUTOTOOLS_BUILD=0
+build --copt=-DHAVE_MESON_BUILD=0
+
+build:msvc --cxxopt=/std:c++latest
+build:cc --cxxopt='-std=c++20'
+
+# Safety
+build:cc --copt=-fstack-protector-all
+
+build:cc --cxxopt='-fdiagnostics-color=always'
+build:cc --cxxopt='-Wall'
+build:cc --cxxopt='-Wcast-qual'
+build:cc --cxxopt='-Wextra'
+
+build:cc --cxxopt='-Werror=missing-declarations'   # -Werror to break build.
+
+#build:cc --cxxopt='-Werror=conversion-null'
+#build:cc --cxxopt='-Werror=mismatched-new-delete'
+#build:cc --cxxopt='-Werror=narrowing'
+#build:cc --cxxopt='-Werror=overlength-strings'
+#build:cc --cxxopt='-Werror=pointer-arith'
+#build:cc --cxxopt='-Werror=reorder'
+#build:cc --cxxopt='-Werror=return-type'
+#build:cc --cxxopt='-Werror=shadow'
+#build:cc --cxxopt='-Werror=uninitialized'
+#build:cc --cxxopt='-Werror=unused'
+#build:cc --cxxopt='-Werror=unused-local-typedefs'
+#build:cc --cxxopt='-Werror=unused-result'
+#build:cc --cxxopt='-Werror=varargs'
+#build:cc --cxxopt='-Werror=vla'
+#build:cc --cxxopt='-Werror=write-strings'
+#build:cc --cxxopt='-Wold-style-cast'
+#build:cc --cxxopt='-Wstrict-aliasing=2'
+#build:cc --cxxopt='-Wpessimizing-move'
+#build:cc --cxxopt='-Wredundant-move'
+
+
+build:gcc --config=cc
+build:clang --config=cc
+build:clang --copt='-Werror=newline-eof'
+build:clang --cxxopt='-Werror=newline-eof'
+
+build --enable_platform_specific_config
+build:windows --enable_runfiles
+build:windows --config=msvc
+build:linux   --config=gcc
+build:macos   --config=cc
+build:macos   --features=-supports_dynamic_linker
+build:freebsd --config=cc
+build:openbsd --config=cc
+

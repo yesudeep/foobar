@@ -1,0 +1,9 @@
+cc_test(
+    name = "turtle_test",
+    size = "small",
+    srcs = ["turtle_test.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_googletest//:gtest_main",
+    ],
+)
